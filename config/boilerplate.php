@@ -1,7 +1,7 @@
 <?php
 
 /*
- * All configuration options for Laravel Boilerplate
+ * All configuration options for TelegramBot
  * http://laravel-boilerplate.com.
  */
 

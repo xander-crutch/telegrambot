@@ -119,7 +119,6 @@ return [
 		App\TelegramBot\Commands\HelpCommand::class,
 		App\TelegramBot\Commands\StartCommand::class,
 		App\TelegramBot\Commands\RatesCommand::class,
-		App\TelegramBot\Commands\BuferaCommand::class,
 		App\TelegramBot\Commands\StreamCommand::class,
 	],
 
@@ -201,7 +200,6 @@ return [
 	|
 	*/
 	'shared_commands' => [
-		//'start' => \App\TelegramBot\Commands\StartCommand::class,
 		//'start' => Acme\Project\Commands\StartCommand::class,
 		// 'stop' => Acme\Project\Commands\StopCommand::class,
 		// 'status' => Acme\Project\Commands\StatusCommand::class,
