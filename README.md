@@ -12,6 +12,10 @@
 
 [Click here for the official documentation](http://telegrambot.erstel.ru)
 
+### Require
+
+Redis
+
 ### Developer
 
 [xander@erstel.ru](xander@erstel.ru)

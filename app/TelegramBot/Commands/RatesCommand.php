@@ -1,7 +1,9 @@
 <?php
 
-namespace App\TelegramBot\Commands;
+namespace App\TramxBot\Commands;
 
+use App\Models\SettingsBot as SB;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Actions;
@@ -26,8 +28,8 @@ class RatesCommand extends Command
 	public function handle()
 	{
 		$out = '';
-		$req = Http::get($this->url);
-		$src = json_decode($req->body(), true);
+		$src = $this->_cache();
+		$out = 'Курс на ' . date('d-m-Y h:i:s', strtotime($src['Timestamp'])) . ' ~' . $src['c'] . PHP_EOL;
 		foreach ($src['Valute'] as $value) {
 			if (in_array($value['CharCode'], ["EUR", "USD", "CNY", "BYN", "UAH"])) {
 				$out .= '<i><u>' . $value['Name'] . '</u></i> <b>' . round($value['Value'], 2) . '₽</b> ';
@@ -42,5 +44,18 @@ class RatesCommand extends Command
 			}
 		}
 		$this->replyWithMessage(['text' => $out, 'parse_mode' => 'html']);
+	}
+
+	private function _cache()
+	{
+		$src = Cache::store('redis')->get($this->name);
+		if (!$src) {
+			$req = Http::get($this->url);
+			$src = json_decode($req->body(), true);
+			Cache::store('redis')->put($this->name, $src, 18000);
+		} else {
+			$src['c'] = 'c';
+		}
+		return $src;
 	}
 }
